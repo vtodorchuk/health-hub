@@ -1,12 +1,12 @@
 version: 2.1
 
 orbs:
-  node: circleci/node@5.0.2
-  browser-tools: circleci/browser-tools@1.1
+  node: HealthHub/node@5.0.2
+  browser-tools: HealthHub/browser-tools@1.1
 
 executors:
   default:
-    working_directory: ~/codebreaker
+    working_directory: ~/HealthHub
     description: The official CircleCI Ruby Docker image
     docker:
       - image: cimg/ruby:3.1.2
@@ -22,8 +22,8 @@ executors:
       - image: cimg/redis:6.2.6
 
 cashes:
-  - &bundle_cache_full v2-codebreaker-{{ checksum "Gemfile.lock" }}
-  - &bundle_cache v2-codebreaker
+  - &bundle_cache_full v2-HealthHub-{{ checksum "Gemfile.lock" }}
+  - &bundle_cache v2-HealthHub
 
 commands:
   defaults:
