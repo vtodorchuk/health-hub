@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Pagination::UserPaginationService < PaginationService
   attr_reader :data, :page, :params, :q, :model
 

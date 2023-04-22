@@ -1,5 +1,4 @@
 # Auto generate with notifications gem.
-class Notification < ActiveRecord::Base
+class Notification < ApplicationRecord
   include Notifications::Model
-
 end

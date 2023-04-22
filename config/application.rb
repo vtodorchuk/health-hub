@@ -1,17 +1,17 @@
-require_relative "boot"
+require_relative 'boot'
 
-require "rails"
+require 'rails'
 # Pick the frameworks you want:
-require "active_model/railtie"
-require "active_job/railtie"
-require "active_record/railtie"
-require "active_storage/engine"
-require "action_controller/railtie"
-require "action_mailer/railtie"
-require "action_mailbox/engine"
-require "action_text/engine"
-require "action_view/railtie"
-require "action_cable/engine"
+require 'active_model/railtie'
+require 'active_job/railtie'
+require 'active_record/railtie'
+require 'active_storage/engine'
+require 'action_controller/railtie'
+require 'action_mailer/railtie'
+require 'action_mailbox/engine'
+require 'action_text/engine'
+require 'action_view/railtie'
+require 'action_cable/engine'
 # require "rails/test_unit/railtie"
 
 # Require the gems listed in Gemfile, including any gems
@@ -23,12 +23,13 @@ module HSystem
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
 
-    ENV["MS_DATABASE_PASSWORD"] = 'vladik20022507'
-    ENV["MAPBOX_ACCESS_TOKEN"] = "pk.eyJ1IjoidmxhZGlrdHQiLCJhIjoiY2xkaXg3MnpoMDU1MTNwbGdsN3AyMno4ayJ9.MPehslQ3HTttLwtsiWtRVA"
+    ENV['MS_DATABASE_PASSWORD'] = 'vladik20022507'
+    ENV['MAPBOX_ACCESS_TOKEN'] =
+      'pk.eyJ1IjoidmxhZGlrdHQiLCJhIjoiY2xkaXg3MnpoMDU1MTNwbGdsN3AyMno4ayJ9.MPehslQ3HTttLwtsiWtRVA'
 
-    ENV["GOOGLE_CLIENT_ID"] = '448082391517-0c914ddq0hnlr052li0ree40c9mtsd7m.apps.googleusercontent.com'
-    ENV["GOOGLE_CLIENT_SECRET"] = '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'
-    
+    ENV['GOOGLE_CLIENT_ID'] = '448082391517-0c914ddq0hnlr052li0ree40c9mtsd7m.apps.googleusercontent.com'
+    ENV['GOOGLE_CLIENT_SECRET'] = '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'
+
     config.generators.system_tests = nil
   end
 end

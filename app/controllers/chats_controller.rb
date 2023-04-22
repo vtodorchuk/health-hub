@@ -15,8 +15,7 @@ class ChatsController < ApplicationController
     @messages = @chat.messages
   end
 
-  def new
-  end
+  def new; end
 
   def create
     chat = Chat.new(name: "user#{current_user.id}_user#{params[:user_id]}")

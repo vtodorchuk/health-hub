@@ -15,10 +15,10 @@ class Message < ApplicationRecord
   def create_notifications
     Notification.create do |notification|
       notification.notify_type = 'message'
-      notification.actor = self.user
-      notification.user = self.chat.decorate.next_user(self.user)
+      notification.actor = user
+      notification.user = chat.decorate.next_user(user)
       notification.target = self
-      notification.second_target = self.chat
+      notification.second_target = chat
     end
   end
 end

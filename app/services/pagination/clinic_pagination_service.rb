@@ -1,5 +1,6 @@
 # frozen_string_literal: true
-class Pagination::ClinicPaginationService  < PaginationService
+
+class Pagination::ClinicPaginationService < PaginationService
   attr_accessor :data, :page, :params, :q, :model
 
   def initialize(params)
