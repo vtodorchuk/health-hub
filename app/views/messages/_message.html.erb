@@ -1,0 +1,35 @@
+<%= turbo_frame_tag(dom_id(message)) do %>
+  <div class="chat-message mt-5 shadow-lg rounded-l p-5">
+    <div class="flex items-end">
+      <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-start">
+        <div>
+          <strong><%= message.user.decorate.username %></strong>
+        </div>
+        <div>
+          <div>
+            <span class="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-blue-300 text-black">
+            <%= message.content %>
+          </span>
+          </div>
+          <% unless message.files.empty? %>
+            <% message.files.each do |file| %>
+             <div class="mt-2">
+                <span class="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-blue-300 text-black">
+                  <%= link_to Rails.application.routes.url_helpers.rails_blob_url(file) do %>
+                    <div class="flex grid-cols-2">
+                      <%= file.filename %>
+                      <p class="mx-2 font-bold"> <%= number_to_human_size(file.blob.byte_size) %> </p>
+                    </div>
+                  <% end %>
+                </span>
+             </div>
+            <% end %>
+          <% end %>
+          <div class="mt-2">
+            <%= message.decorate.send_at %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

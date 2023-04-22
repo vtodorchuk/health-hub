@@ -1,0 +1,18 @@
+// Entry point for your Sass build
+
+.center {
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+}
+
+#messages {
+  height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  padding: 2em;
+  border: 1px solid #9ca3af;
+  border-radius: 3px;
+  margin-bottom: 2em;
+}

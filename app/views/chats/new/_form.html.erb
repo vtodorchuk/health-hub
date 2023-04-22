@@ -1,0 +1,14 @@
+<%= form_with(url: chats_url, method: :post) do |f| %>
+
+  <div class='text-center mt-5'>
+    <%= f.label :user %>
+  </div>
+
+  <div class='text-center mt-5'>
+    <%= f.select :user_id, User.all.collect {|u| [ u.decorate.username, u.id ] } %>
+  </div>
+
+  <div class='text-center' >
+    <%= f.submit "Create", class: 'mt-5 mb-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full'%>
+  </div>
+<% end %>

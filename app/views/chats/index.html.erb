@@ -1,0 +1,60 @@
+<% if @chats.empty? %>
+  <h1 class="text-center mt-5">Empty Page</h1>
+
+  <%= render 'chats/new/form' %>
+
+<% else %>
+  <%= link_to 'New Chat', new_chat_path, class: 'mt-5 mb-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full' %>
+
+  <table class="min-w-max w-full table-auto mt-5">
+    <thead>
+    <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+      <th class="py-3 px-6 text-left">#</th>
+      <th class="py-3 px-6 text-left">Photo</th>
+      <th class="py-3 px-6 text-center">Username</th>
+      <th class="py-3 px-6 text-center">Actions</th>
+    </tr>
+    </thead>
+    <tbody class="text-gray-600 text-sm font-light">
+    <% @chats.each do |chat| %>
+      <tr class="border-b border-gray-200 hover:bg-gray-100">
+        <td class="py-3 px-6 text-left whitespace-nowrap">
+          <div class="flex items-center">
+            <span class="font-medium"><%= chat.id %></span>
+          </div>
+        </td>
+        <td class="py-3 px-6 text-left">
+          <div class="flex items-center">
+            <div class="mr-2">
+              <% if chat.decorate.next_user(current_user).avatar.attached? %>
+                <%= image_tag(chat.decorate.next_user(current_user).avatar, class: "w-6 h-6 rounded-full") %>
+              <% else %>
+                <img class="w-6 h-6 rounded-full" src="https://randomuser.me/api/portraits/men/1.jpg"/>
+              <% end %>
+            </div>
+          </div>
+        </td>
+        <td class="py-3 px-6 text-left">
+          <div class="flex items-center">
+            <div class="mr-2">
+              <%= chat.decorate.usernames(current_user) %>
+            </div>
+          </div>
+        </td>
+        <td class="py-3 px-6 text-center">
+          <div class="flex item-center justify-center">
+            <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
+              <%= link_to chat_path(chat.id) do %>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+              <% end %>
+            </div>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% end %>

@@ -1,0 +1,75 @@
+<h2>Sign up</h2>
+
+<%= link_to "Sign in with Google", omniauth_user_session_path, method: :post %>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= render "devise/shared/error_messages", resource: resource %>
+
+  <div class="field">
+    <%= f.email_field :email, autofocus: true, autocomplete: "email",
+                      class: "mt-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+                      focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
+                      dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
+                      dark:focus:border-blue-500", placeholder: :email %>
+  </div>
+
+  <div class="field">
+    <%= f.text_field :first_name, autofocus: true,
+                     class: "mt-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+                      focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
+                      dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
+                      dark:focus:border-blue-500", placeholder: :first_name  %>
+  </div>
+
+  <div class="field">
+    <%= f.text_field :last_name, autofocus: true,
+                     class: "mt-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+                      focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
+                      dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
+                      dark:focus:border-blue-500", placeholder: :last_name  %>
+  </div>
+
+  <div class="field">
+    <%= f.text_field :phone, autofocus: true,
+                     class: "mt-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+                      focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
+                      dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
+                      dark:focus:border-blue-500", placeholder: :phone  %>
+  </div>
+
+  <div class="field mt-5'">
+    <%= f.label :birthday %><br />
+    <%= f.date_field :birthday, autofocus: true,
+                     class: "mt-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+                      focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
+                      dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
+                      dark:focus:border-blue-500"  %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password, class: 'mt-3' %>
+    <% if @minimum_password_length %>
+    <em>(<%= @minimum_password_length %> characters minimum)</em>
+    <% end %><br />
+    <%= f.password_field :password, autocomplete: "new-password",
+                         class: "block w-full p-2 text-gray-900 border border-gray-300 rounded-lg
+                      bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700
+                      dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
+                      dark:focus:border-blue-500" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password_confirmation, class: 'mt-3' %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "new-password",
+                         class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+                      focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
+                      dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
+                      dark:focus:border-blue-500"  %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Sign up", class: 'mt-5 mb-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full'%>
+  </div>
+<% end %>
+
+<%= render "devise/shared/links" %>

@@ -1,0 +1,11 @@
+<% if notice.present? %>
+  <div class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 white:bg-gray-800 dark:text-blue-400" role="alert">
+    <span class="font-medium"><%= notice %></span>
+  </div>
+<% end %>
+
+<% if alert.present? %>
+  <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 white:bg-gray-800 dark:text-red-400" role="alert">
+    <span class="font-medium"><%= alert %></span>
+  </div>
+<% end %>

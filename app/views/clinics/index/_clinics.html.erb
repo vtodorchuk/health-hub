@@ -1,0 +1,36 @@
+<table class="min-w-max w-full table-auto">
+  <thead>
+  <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+    <th class="py-3 px-6 text-left">#</th>
+    <th class="py-3 px-6 text-left">Label</th>
+    <th class="py-3 px-6 text-center">Address</th>
+    <th class="py-3 px-6 text-center">City</th>
+  </tr>
+  </thead>
+  <tbody class="text-gray-600 text-sm font-light">
+    <% clinics.each_with_index do |clinic, index| %>
+      <tr class="border-b border-gray-200 hover:bg-gray-100">
+        <td class="py-3 px-6 text-left whitespace-nowrap">
+          <div class="flex items-center">
+            <span class="font-medium"><%= index + 1 %></span>
+          </div>
+        </td>
+        <td class="py-3 px-6 text-left whitespace-nowrap">
+          <div class="flex items-center">
+            <span class="font-medium"><%= clinic.label %></span>
+          </div>
+        </td>
+        <td class="py-3 px-6 text-left whitespace-nowrap">
+          <div class="flex items-center">
+            <span class="font-medium"><%= clinic.tooltip %></span>
+          </div>
+        </td>
+        <td class="py-3 px-6 text-left whitespace-nowrap">
+          <div class="flex items-center">
+            <span class="font-medium"><%= clinic.city %></span>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

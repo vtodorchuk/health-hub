@@ -1,0 +1,13 @@
+<div id="<%= dom_id(@chat) %>" data-controller="messages">
+  <%= turbo_stream_from dom_id(@chat) %>
+  <h1><%= @chat.decorate.usernames(current_user) %></h1>
+
+  <div id="messages" class="container" data-messages-target="container">
+    <% @messages&.each do |message| %>
+      <%= render 'messages/message', message: message %>
+    <% end %>
+  </div>
+  <div id="new_message" data-messages-target="input_form">
+    <%= render 'messages/form', chat: @chat %>
+  </div>
+</div>

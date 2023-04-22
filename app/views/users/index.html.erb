@@ -1,0 +1,40 @@
+<div>
+  <h1 class="font-bold text-4xl">Users</h1>
+
+  <div class="mt-5">
+    <div class="mb-2">
+      <%= search_form_for @q, data: { turbo_frame: :results } do |f| %>
+        <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+        <div class="relative">
+          <%= f.search_field :first_name_or_last_name_or_email_cont,
+                             class: 'px-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500
+                                    focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600
+                                    dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
+                                    dark:focus:border-blue-500', oninput: 'this.form.requestSubmit()',
+                              autofocus: true, autocomplete: 'off'%>
+        </div>
+      <% end %>
+    </div>
+
+    <%= turbo_frame_tag :results do %>
+      <ul class="py-2 text-sm text-gray-700 dark:text-gray-200 grid grid-cols-10" aria-labelledby="dropdownDefaultButton">
+        <% Role.all.each do |role| %>
+          <li>
+            <span class="flex items-center text-sm font-medium text-gray-900 dark:text-white">
+              <%= link_to role.name.capitalize, users_path(role: role.name), class: "block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" %>
+            </span>
+          </li>
+        <% end %>
+        <li>
+          <span class="flex items-center text-sm font-medium text-gray-900 dark:text-white">
+            <%= link_to 'All', users_path, class: "block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" %>
+          </span>
+        </li>
+      </ul>
+
+      <%= render 'users/index/users', users: @users %>
+
+      <%= render 'users/index/pagination' %>
+    <% end %>
+  </div>
+</div>

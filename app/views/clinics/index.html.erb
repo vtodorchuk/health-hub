@@ -1,0 +1,48 @@
+<div>
+  <h1 class="font-bold text-4xl mb-5">Clinics</h1>
+
+    <% unless @clinics.empty? %>
+      <div class="mt-5">
+        <div class="mb-2">
+          <%= search_form_for @q, data: { turbo_frame: :results } do |f| %>
+            <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+            <div class="relative">
+              <%= f.search_field :city_or_tooltip_or_label_cont,
+                                 class: 'px-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500
+                                      focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600
+                                      dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
+                                      dark:focus:border-blue-500', oninput: 'this.form.requestSubmit()',
+                                 autofocus: true, autocomplete: 'off'%>
+            </div>
+          <% end %>
+        </div>
+        <%= turbo_frame_tag :results do %>
+          <%= js_map @clinics, style: "mapbox://styles/mapbox/navigation-day-v1", controls: true %>
+
+          <ul class="py-2 text-sm text-gray-700 dark:text-gray-200 grid grid-cols-10" aria-labelledby="dropdownDefaultButton">
+            <li>
+              <span class="flex items-center text-sm font-medium text-gray-900 dark:text-white">
+                <%= link_to 'Lviv', clinics_path(city: 'Lviv'), class: "block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" %>
+              </span>
+            </li>
+            <li>
+              <span class="flex items-center text-sm font-medium text-gray-900 dark:text-white">
+                <%= link_to 'Kyiv', clinics_path(city: 'Kyiv'), class: "block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" %>
+              </span>
+            </li>
+            <li>
+              <span class="flex items-center text-sm font-medium text-gray-900 dark:text-white">
+                <%= link_to 'All', clinics_path, class: "block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" %>
+              </span>
+            </li>
+          </ul>
+
+          <%= render 'clinics/index/clinics', clinics: @clinics %>
+
+          <%= render 'clinics/index/pagination' %>
+        <% end %>
+      <% else %>
+        <h1 class="text-center mt-5">Empty Page</h1>
+      <% end %>
+  </div>
+</div>

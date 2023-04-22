@@ -1,0 +1,4 @@
+<%= link_to main_app.chat_path(notification.second_target.id ) do %>
+  <%= notification.actor.decorate.username %>
+  <%= notification.target.content[0..50] %>
+<% end %>
