@@ -15,12 +15,10 @@ executors:
           PGHOST: 127.0.0.1
           PGUSER: root
       - image: cimg/postgres:14.0
-        auth:
-          username: vladytodorchuk
-          password: vladik20022507
         environment:
           POSTGRES_USER: vladytodorchuk
           POSTGRES_DB: ms_test
+          password: vladik20022507
       - image: cimg/redis:6.2.6
 
 cashes:
