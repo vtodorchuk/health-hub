@@ -1,8 +1,8 @@
 version: 2.1
 
 orbs:
-  node: health-hub/node@5.0.2
-  browser-tools: health-hub/browser-tools@1.1
+  node: circleci/node@5.0.2
+  browser-tools: circleci/browser-tools@1.1
 
 executors:
   default:
