@@ -1,0 +1,70 @@
+require:
+  - rubocop-rspec
+  - rubocop-rails
+  - rubocop-performance
+AllCops:
+  NewCops: enable
+
+Rails/BulkChangeTable:
+  Enabled: false
+
+Metrics/MethodLength:
+  Max: 16
+  Exclude:
+    - 'db/migrate/*'
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Rails/OutputSafety:
+  Enabled: false
+
+Rails/FilePath:
+  Enabled: false
+
+Metrics/BlockLength:
+  Max: 40
+
+RSpec/ExampleLength:
+  Max: 30
+
+Metrics/AbcSize:
+  Max: 30
+
+Lint/ConstantDefinitionInBlock:
+  Enabled: false
+
+RSpec/MessageSpies:
+  Enabled: false
+
+RSpec/MultipleMemoizedHelpers:
+  Max: 9
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Lint/UnreachableCode:
+  Enabled: false
+
+RSpec/ImplicitSubject:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Max: 4
+
+Style/SignalException:
+  Enabled: false
+
+Style/ExponentialNotation:
+  Enabled: false
+
+Rails/HasAndBelongsToMany:
+  Exclude:
+    - 'app/models/role.rb'
+
+Layout/LineLength:
+  Exclude:
+    - 'config/initializers/simple_form.rb'

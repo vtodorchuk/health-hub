@@ -1,0 +1,110 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@5.0.2
+  browser-tools: circleci/browser-tools@1.1
+
+executors:
+  default:
+    working_directory: ~/codebreaker
+    description: The official CircleCI Ruby Docker image
+    docker:
+      - image: cimg/ruby:3.1.2
+        environment:
+          RAILS_ENV: test
+          PGHOST: 127.0.0.1
+          PGUSER: root
+      - image: cimg/postgres:14.0
+        auth:
+          username: vladytodorchuk
+          password: vladik20022507
+        environment:
+          POSTGRES_USER: vladytodorchuk
+          POSTGRES_DB: ms_test
+      - image: cimg/redis:6.2.6
+
+cashes:
+  - &bundle_cache_full v2-codebreaker-{{ checksum "Gemfile.lock" }}
+  - &bundle_cache v2-codebreaker
+
+commands:
+  defaults:
+    steps:
+      - browser-tools/install-browser-tools
+      - checkout
+      - restore_cache:
+          keys:
+            - *bundle_cache_full
+            - *bundle_cache
+      - run: bundle install --path vendor/bundle
+      - save_cache:
+          key: *bundle_cache_full
+          paths:
+            - vendor/bundle
+      - run:
+          name: Install dependencies
+          command: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --workers 4 --retry 3
+
+      - node/install:
+          install-yarn: true
+          node-version: '16.17'
+      - run: node --version
+      - run: google-chrome --version
+
+      - run: sudo apt install -y postgresql-client || true
+
+      - run:
+          name: Database setup
+          command: |
+            bundle exec rake db:create
+            bundle exec rake db:schema:load
+  run_rubocop:
+    description: command to start rubocop
+    steps:
+      - run:
+          name: rubocop
+          command: bundle exec rubocop
+
+  run_fasterer:
+    description: command to start fasterer
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: fasterer
+          command: bundle exec fasterer
+
+  run_rspec:
+    description: command to start specs
+    steps:
+      - run:
+          name: specs
+          command: |
+            RAILS_ENV=test bin/rake assets:precompile
+            bundle exec rspec
+      - store_artifacts:
+          path: ~/codebreaker/coverage
+          destination: coverage
+
+jobs:
+  lintering:
+    executor: default
+    parallelism: 2
+    steps:
+      - defaults
+      - run_rubocop
+      - run_fasterer
+
+  rspec:
+    executor: default
+    steps:
+      - defaults
+      - run_rspec
+
+workflows:
+  build:
+    jobs:
+      - lintering
+      - rspec:
+          requires:
+            - lintering
