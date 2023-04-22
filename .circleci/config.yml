@@ -1,12 +1,12 @@
 version: 2.1
 
 orbs:
-  node: healthhub/node@5.0.2
-  browser-tools: healthhub/browser-tools@1.1
+  node: health-hub/node@5.0.2
+  browser-tools: health-hub/browser-tools@1.1
 
 executors:
   default:
-    working_directory: ~/healthhub
+    working_directory: ~/health-hub
     description: The official CircleCI Ruby Docker image
     docker:
       - image: cimg/ruby:3.1.2
@@ -22,8 +22,8 @@ executors:
       - image: cimg/redis:6.2.6
 
 cashes:
-  - &bundle_cache_full v2-healthhub-{{ checksum "Gemfile.lock" }}
-  - &bundle_cache v2-healthhub
+  - &bundle_cache_full v2-health-hub-{{ checksum "Gemfile.lock" }}
+  - &bundle_cache v2-health-hub
 
 commands:
   defaults:
