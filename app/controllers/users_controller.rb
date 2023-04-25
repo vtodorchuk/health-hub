@@ -4,7 +4,9 @@ class UsersController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    pagy = Pagination::UserPaginationService.new(params).call
+    pagy = Pagination::UserPaginationService.new(params).paginate(params[:clinic_id])
+
+    authorize! pagy.data
 
     @q = pagy.q
 
@@ -20,7 +22,7 @@ class UsersController < ApplicationController
     if user.present?
       @user = user.decorate
     else
-      redirect_to users_path, alert: t('users.not_found')
+      redirect_to users_path, alert: [t('users.not_found')]
     end
   end
 
@@ -30,7 +32,7 @@ class UsersController < ApplicationController
     if user.present?
       @user = user.decorate
     else
-      redirect_to users_path, alert: t('users.not_found')
+      redirect_to users_path, alert: [t('users.not_found')]
     end
   end
 
@@ -38,7 +40,7 @@ class UsersController < ApplicationController
     user = User.find_by(id: params[:id])
 
     if user.update(permitted_params[:user])
-      redirect_to user_path(user.id), notice: t('users.success')
+      redirect_to user_path(user.id), notice: [t('users.success')]
     else
       redirect_to users_path, alert: user.errors.full_messages.join(', ')
     end
@@ -51,7 +53,7 @@ class UsersController < ApplicationController
       @user = user.decorate
       render 'users/show'
     else
-      redirect_to users_path, alert: t('users.not_found')
+      redirect_to users_path, alert: [t('users.not_found')]
     end
   end
 

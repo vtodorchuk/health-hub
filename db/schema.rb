@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_10_122100) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_22_103146) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -42,6 +42,25 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_10_122100) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "bookings", force: :cascade do |t|
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.bigint "service_id", null: false
+    t.boolean "intake_forms", default: false, null: false
+    t.boolean "online", default: false, null: false
+    t.string "status", default: "pending"
+    t.decimal "duration", default: "15.0"
+    t.bigint "doctor_id"
+    t.bigint "patient_id"
+    t.boolean "doctor_accepted", default: false
+    t.boolean "patient_accepted", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["doctor_id"], name: "index_bookings_on_doctor_id"
+    t.index ["patient_id"], name: "index_bookings_on_patient_id"
+    t.index ["service_id"], name: "index_bookings_on_service_id"
+  end
+
   create_table "chat_users", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "chat_id", null: false
@@ -67,19 +86,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_10_122100) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "contract_users", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "contract_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["contract_id"], name: "index_contract_users_on_contract_id"
-    t.index ["user_id"], name: "index_contract_users_on_user_id"
-  end
-
   create_table "contracts", force: :cascade do |t|
     t.text "body"
+    t.bigint "doctor_id"
+    t.bigint "patient_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["doctor_id"], name: "index_contracts_on_doctor_id"
+    t.index ["patient_id"], name: "index_contracts_on_patient_id"
   end
 
   create_table "medical_cards", force: :cascade do |t|
@@ -125,6 +139,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_10_122100) do
     t.datetime "updated_at", null: false
     t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
     t.index ["resource_type", "resource_id"], name: "index_roles_on_resource"
+  end
+
+  create_table "services", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_services_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -175,13 +198,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_10_122100) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "bookings", "services"
+  add_foreign_key "bookings", "users", column: "doctor_id"
+  add_foreign_key "bookings", "users", column: "patient_id"
   add_foreign_key "chat_users", "chats"
   add_foreign_key "chat_users", "users"
-  add_foreign_key "contract_users", "contracts"
-  add_foreign_key "contract_users", "users"
+  add_foreign_key "contracts", "users", column: "doctor_id"
+  add_foreign_key "contracts", "users", column: "patient_id"
   add_foreign_key "medical_cards", "users"
   add_foreign_key "messages", "chats"
   add_foreign_key "messages", "users"
+  add_foreign_key "services", "users"
   add_foreign_key "users", "clinics"
   add_foreign_key "visit_users", "users"
   add_foreign_key "visit_users", "visits"

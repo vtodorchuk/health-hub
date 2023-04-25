@@ -1,11 +1,39 @@
 <% if notice.present? %>
-  <div class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 white:bg-gray-800 dark:text-blue-400" role="alert">
-    <span class="font-medium"><%= notice %></span>
+  <div class="flex p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
+    <ul class="max-w-md space-y-1 text-gray-500 list-inside dark:text-gray-400">
+      <% if notice.kind_of?(Array) %>
+        <% notice.each do |message| %>
+          <li class="flex items-center text-black-900">
+            <svg class="w-4 h-4 mr-1.5 text-green-500 dark:text-green-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg>
+            <%= message %>
+          </li>
+        <% end %>
+      <% else %>
+        <li class="flex items-center text-black-900">
+          <svg class="w-4 h-4 mr-1.5 text-green-500 dark:text-green-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg>
+          <%= notice %>
+        </li>
+      <% end %>
+    </ul>
   </div>
 <% end %>
 
 <% if alert.present? %>
   <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 white:bg-gray-800 dark:text-red-400" role="alert">
-    <span class="font-medium"><%= alert %></span>
+    <ul class="max-w-md space-y-1 text-gray-500 list-inside dark:text-gray-400">
+      <% if alert.kind_of?(Array) %>
+        <% alert.each do |message| %>
+          <li class="flex items-center text-black-900">
+            <svg class="w-4 h-4 mr-1.5 text-red-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg>
+            <%= message %>
+          </li>
+        <% end %>
+      <% else %>
+        <li class="flex items-center text-black-900">
+          <svg class="w-4 h-4 mr-1.5 text-red-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg>
+          <%= alert %>
+        </li>
+      <% end %>
+    </ul>
   </div>
 <% end %>

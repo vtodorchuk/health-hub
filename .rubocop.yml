@@ -9,7 +9,7 @@ Rails/BulkChangeTable:
   Enabled: false
 
 Metrics/MethodLength:
-  Max: 16
+  Max: 20
   Exclude:
     - 'db/migrate/*'
 
@@ -66,5 +66,12 @@ Rails/HasAndBelongsToMany:
     - 'app/models/role.rb'
 
 Layout/LineLength:
+  Max: 130
   Exclude:
     - 'config/initializers/simple_form.rb'
+
+Metrics/ClassLength:
+  Max: 130
+
+Rails/InverseOf:
+  Enabled: false
