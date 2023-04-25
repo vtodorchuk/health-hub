@@ -1,0 +1,29 @@
+<div class="mt-4">
+  <div class="w-full max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+    <div class="flex items-center justify-between mb-4">
+      <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Participants</h5>
+    </div>
+    <div class="flow-root">
+      <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+        <li class="py-3 sm:py-4 flex flex-col-2 space-x-5">
+          <% if booking.doctor.avatar.attached? %>
+            <%= image_tag(booking.doctor.avatar, class: "w-8 h-8 rounded-full") %>
+          <% else %>
+            <%= image_tag('image-2@2x.jpg', class: "w-8 h-8 rounded-full") %>
+          <% end %>
+
+          <%= booking.doctor.decorate.username %>
+        </li>
+        <li class="py-3 sm:py-4 flex flex-col-2 space-x-5">
+          <% if booking.patient.avatar.attached? %>
+            <%= image_tag(booking.patient.avatar, class: "w-8 h-8 rounded-full") %>
+          <% else %>
+            <%= image_tag('image-2@2x.jpg', class: "w-8 h-8 rounded-full") %>
+          <% end %>
+
+          <%= booking.patient.decorate.username %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

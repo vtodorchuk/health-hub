@@ -1,0 +1,12 @@
+en:
+  booking:
+    created: 'Booking was created!'
+    destroy: 'Booking was destroyed!'
+    cancelled: 'Booking was cancelled!'
+    accepted: 'Booking was accepted!'
+    not_found: 'Booking not found!'
+    custom_service:
+      not_found: 'Service not found!'
+    validates:
+      start_time: 'Start Time is invalid!'
+      collision: 'Collision with other booking'
