@@ -5,10 +5,20 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-  resources :users, only: %i[index show edit update]
+  resources :users, only: %i[show update edit] do
+    resources :bookings do
+      put 'accept', to: 'bookings#accept'
+      put 'cancel', to: 'bookings#cancel'
+    end
+    resources :services
+    resources :patients
+  end
+
   resources :medical_cards
 
-  resources :clinics
+  resources :clinics do
+    get 'users', to: 'users#index'
+  end
 
   resources :chats, shallow: true do
     resources :messages, only: %i[create index destroy update]

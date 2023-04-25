@@ -32,3 +32,24 @@ Clinic.create(label: 'Yuliya, Ambulatoriya Simeynoyi Medytsyny',
     clinic_id: c.id
   )
 end
+u = User.first
+
+u.remove_role :patient
+u.add_role :doctor
+
+u = User.create(
+  email: 'admin@admin.ua',
+  password: 'password',
+  first_name: 'Admin',
+  last_name: 'Admin',
+  phone: FFaker::PhoneNumberUA.home_phone_number,
+  birthday: DateTime.current - rand(18..60).years,
+  clinic_id: c.id
+)
+
+u.remove_role :patient
+u.add_role :administrator
+
+Service.create(name: 'Family Doctor', user_id: u.id)
+
+Contract.create(doctor_id: User.first.id, patient_id: User.second.id)
