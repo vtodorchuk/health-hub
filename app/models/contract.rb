@@ -1,4 +1,4 @@
 class Contract < ApplicationRecord
-  has_many :contract_users, dependent: :destroy
-  has_many :users, through: :contract_users
+  belongs_to :patient, class_name: 'User'
+  belongs_to :doctor, class_name: 'User'
 end
