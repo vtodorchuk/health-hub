@@ -6,7 +6,7 @@ class CreateReports < ActiveRecord::Migration[7.0]
       t.integer :blood_pressure
       t.integer :pulse
       t.float :temperature
-      t.boolean :complications
+      t.boolean :complications, null: false
 
       t.integer :patient_id
       t.integer :doctor_id
