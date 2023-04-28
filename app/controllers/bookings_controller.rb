@@ -3,6 +3,7 @@
 class BookingsController < ApplicationController
   before_action :authenticate_user!
   before_action :validate_collision, only: :create
+  before_action :service_validation, only: :create
 
   def index
     @day = params[:day].to_i || DateTime.now.strftime('%d').to_i
@@ -39,12 +40,6 @@ class BookingsController < ApplicationController
   end
 
   def create
-    service = ClinicService.call(params[:booking][:service], current_user)
-
-    if service.nil?
-      return redirect_to new_user_booking_path(user_id: current_user.id), alert: t('booking.custom_service.not_found')
-    end
-
     booking = Bookings::CreateBookingService.call(current_user, service, params)
 
     respond_to do |format|
@@ -111,5 +106,13 @@ class BookingsController < ApplicationController
         redirect_to user_bookings_path(user_id: current_user.id, day: params[:day]), alert: t('booking.validates.collision')
       end
     end
+  end
+
+  def service_validation
+    service = ClinicService.call(params[:booking][:service], current_user)
+
+    return unless service.nil?
+
+    redirect_to new_user_booking_path(user_id: current_user.id), alert: t('booking.custom_service.not_found')
   end
 end
