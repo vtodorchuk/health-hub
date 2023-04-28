@@ -52,11 +52,11 @@ class BookingsController < ApplicationController
         CancelBookingJob.set(wait_until: booking.end_time).perform_later(booking)
 
         format.html do
-          redirect_to user_bookings_path, notice: t('booking.created')
+          redirect_to user_bookings_path(user_id: current_user.id, day: params[:day]), notice: t('booking.created')
         end
       else
         format.html do
-          redirect_to user_bookings_path, alert: booking.errors.full_messages
+          redirect_to user_bookings_path(user_id: current_user.id, day: params[:day]), alert: booking.errors.full_messages
         end
       end
     end
@@ -108,7 +108,7 @@ class BookingsController < ApplicationController
 
     respond_to do |format|
       format.html do
-        redirect_to user_bookings_path(user_id: current_user.id), alert: t('booking.validates.collision')
+        redirect_to user_bookings_path(user_id: current_user.id, day: params[:day]), alert: t('booking.validates.collision')
       end
     end
   end
