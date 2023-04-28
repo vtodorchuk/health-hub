@@ -1,0 +1,37 @@
+<%= render 'shared/breadcrumbs' %>
+
+<%= render 'bookings/show/three_dots_menu', booking: @booking %>
+
+<div class="flex justify-center mt-5">
+  <div class="w-screen p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+    <div>
+      <div>
+        <% if @booking.status == 'pending' %>
+          <span class="bg-yellow-100 text-yellow-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300"><%= @booking.status.capitalize %></span>
+        <% elsif @booking.status == 'completed'%>
+          <span class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300"><%= @booking.status.capitalize %></span>
+        <% elsif @booking.status == 'cancelled'%>
+          <span class="bg-gray-100 text-gray-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300"><%= @booking.status.capitalize %></span>
+        <% elsif @booking.status == 'scheduled'%>
+          <span class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300"><%= @booking.status.capitalize %></span>
+        <% end %>
+      </div>
+      <div>
+        <div class="flex">
+          <div>
+            <%= render 'bookings/show/users', booking: @booking %>
+          </div>
+          <div class="mx-5">
+            <%= render 'bookings/show/details', booking: @booking %>
+          </div>
+        </div>
+        <div class="mt-3">
+          <%= render 'bookings/show/actions', booking: @booking %>
+          <% unless @booking.status == 'cancelled' %>
+            <%= render 'bookings/show/cancel', booking: @booking %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
