@@ -9,7 +9,10 @@ Rails.application.routes.draw do
     resources :bookings do
       put 'accept', to: 'bookings#accept'
       put 'cancel', to: 'bookings#cancel'
+
+      resources :reports
     end
+
     resources :services
     resources :patients
   end

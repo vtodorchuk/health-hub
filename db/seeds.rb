@@ -48,8 +48,21 @@ u = User.create(
 )
 
 u.remove_role :patient
-u.add_role :administrator
+u.add_role :doctor
 
 Service.create(name: 'Family Doctor', user_id: u.id)
 
 Contract.create(doctor_id: User.first.id, patient_id: User.second.id)
+
+10.times do
+  Report.create(
+    patient_id: 1,
+    doctor_id: 2,
+    illnesses: 'Грип',
+    blood_pressure: rand(120...170),
+    pulse: rand(120...170),
+    temperature: rand(35...39),
+    complications: false,
+    booking_id: 2
+  )
+end

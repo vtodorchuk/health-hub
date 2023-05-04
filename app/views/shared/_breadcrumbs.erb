@@ -1,5 +1,5 @@
 <nav class="flex" aria-label="Breadcrumb">
-  <% if request.path.match /users\/\d\/bookings\/\d/ %>
+  <% if request.path.match /^\/users\/\d+\/bookings\/\d+$/ %>
     <%= render 'shared/breadcrumbs/booking', booking: @booking %>
   <% end %>
 </nav>

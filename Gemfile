@@ -52,3 +52,5 @@ gem 'omniauth-rails_csrf_protection', '~> 1.0', '>= 1.0.1'
 gem 'action_policy'
 gem 'notifications'
 gem 'simple_form'
+
+gem 'pry'

@@ -1,0 +1,30 @@
+<% @group_by_illnesses.each do |r, v| %>
+  <%= r %> <%= v.count %> <br>
+<% end %>
+
+<div class="relative overflow-x-auto mt-5">
+  <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+    <tr>
+      <th scope="col" class="px-6 py-3">
+        Report row name
+      </th>
+      <th scope="col" class="px-6 py-3">
+        Report result
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+      <% @statistics.each do |k, v| %>
+        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <%= k %>
+          </th>
+          <td class="px-6 py-4">
+            <%= v %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

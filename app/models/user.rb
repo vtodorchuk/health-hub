@@ -1,5 +1,6 @@
 class User < ApplicationRecord
-  rolify
+  include UserRoles
+
   after_create :add_medical_card
 
   devise :database_authenticatable, :registerable,
@@ -26,10 +27,5 @@ class User < ApplicationRecord
 
   has_many :services, dependent: :destroy
 
-  private
-
-  def add_medical_card
-    MedicalCard.create(user_id: id)
-    add_role :patient
-  end
+  has_many :patient_reports, class_name: 'Report', foreign_key: 'patient_id', dependent: :destroy
 end

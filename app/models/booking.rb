@@ -1,4 +1,6 @@
 class Booking < ApplicationRecord
+  include DateValidation
+
   ABILITY_TO_CANCEL_BOOKING = %w[cancelled completed].freeze
 
   belongs_to :service
@@ -12,13 +14,7 @@ class Booking < ApplicationRecord
   scope :scheduled, -> { where(status: 'scheduled') }
 
   validates :end_time, comparison: { greater_than: :start_time }
-  validates :start_time, presence: true, if: :date_validates
+  # validates :start_time, presence: true, if: :date_validates
 
-  private
-
-  def date_validates
-    return unless start_time <= DateTime.now
-
-    errors.add :start_time, I18n.t('booking.validates.start_time')
-  end
+  has_one :report, dependent: :destroy
 end

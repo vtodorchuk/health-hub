@@ -1,0 +1,7 @@
+Reporting
+
+<%= render 'reports/shared/user', user: @booking.patient.decorate %>
+<%= render 'reports/shared/form',
+           booking: @booking,
+           patient: @booking.patient.decorate,
+           doctor: @booking.doctor.decorate %>

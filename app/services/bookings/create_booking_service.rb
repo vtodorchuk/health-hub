@@ -3,8 +3,8 @@
 module Bookings
   class CreateBookingService
     def self.call(current_user, service, params)
-      doctor_accepted = (current_user.has_role? :doctor)
-      patient_accepted = (current_user.has_role? :patient)
+      doctor_accepted = current_user.has_role? :doctor
+      patient_accepted = current_user.has_role? :patient
 
       Booking.new(service_id: service.id,
                   start_time: params[:booking][:start_time],

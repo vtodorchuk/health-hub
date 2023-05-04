@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_22_103146) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_04_154910) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -52,8 +52,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_22_103146) do
     t.decimal "duration", default: "15.0"
     t.bigint "doctor_id"
     t.bigint "patient_id"
-    t.boolean "doctor_accepted", default: false
-    t.boolean "patient_accepted", default: false
+    t.boolean "doctor_accepted", default: false, null: false
+    t.boolean "patient_accepted", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["doctor_id"], name: "index_bookings_on_doctor_id"
@@ -129,6 +129,31 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_22_103146) do
     t.datetime "updated_at", precision: nil, null: false
     t.index ["user_id", "notify_type"], name: "index_notifications_on_user_id_and_notify_type"
     t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
+  create_table "report_complications", force: :cascade do |t|
+    t.string "complication"
+    t.bigint "report_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["report_id"], name: "index_report_complications_on_report_id"
+  end
+
+  create_table "reports", force: :cascade do |t|
+    t.bigint "doctor_id"
+    t.bigint "patient_id"
+    t.bigint "booking_id"
+    t.text "illnesses"
+    t.string "status"
+    t.integer "blood_pressure"
+    t.integer "pulse"
+    t.float "temperature"
+    t.boolean "complications"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["booking_id"], name: "index_reports_on_booking_id"
+    t.index ["doctor_id"], name: "index_reports_on_doctor_id"
+    t.index ["patient_id"], name: "index_reports_on_patient_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -208,6 +233,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_22_103146) do
   add_foreign_key "medical_cards", "users"
   add_foreign_key "messages", "chats"
   add_foreign_key "messages", "users"
+  add_foreign_key "report_complications", "reports"
+  add_foreign_key "reports", "bookings"
+  add_foreign_key "reports", "users", column: "doctor_id"
+  add_foreign_key "reports", "users", column: "patient_id"
   add_foreign_key "services", "users"
   add_foreign_key "users", "clinics"
   add_foreign_key "visit_users", "users"
