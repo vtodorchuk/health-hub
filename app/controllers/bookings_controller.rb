@@ -57,7 +57,7 @@ class BookingsController < ApplicationController
     end
   end
 
-  # TODO Implement update booking feature
+  # TODO: Implement update booking feature
   def update; end
 
   def accept
@@ -104,7 +104,8 @@ class BookingsController < ApplicationController
 
     respond_to do |format|
       format.html do
-        redirect_to clinic_user_bookings_path(user_id: current_user.id, day: params[:day]), alert: t('booking.validates.collision')
+        redirect_to clinic_user_bookings_path(user_id: current_user.id, day: params[:day]),
+                    alert: t('booking.validates.collision')
       end
     end
   end
