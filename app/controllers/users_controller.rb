@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    pagy = Pagination::UserPaginationService.new(params).paginate(params[:clinic_id])
+    pagy = Pagination::UserPaginationService.new(params).paginate(current_clinic.id)
 
     authorize! pagy.data
 

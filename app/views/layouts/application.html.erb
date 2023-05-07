@@ -16,12 +16,12 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css" rel="stylesheet" />
   </head>
 
-  <body>
+  <body class="bg-gray-100">
     <%= render 'shared/navigation_bar'%>
     <%= render 'shared/sidebar' if current_user.present? %>
 
     <main class="center mt-10">
-      <div class="mt-10">
+      <div class="mt-10 bg-white p-5 shadow-sm rounded-md">
         <%= render 'shared/alerts' %>
 
         <%= yield %>

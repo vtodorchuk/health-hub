@@ -3,7 +3,7 @@
 
   <div class="mt-5">
     <div class="mb-2">
-      <%= search_form_for @q, url: clinic_users_path(clinic_id: current_user.clinic.id), data: { turbo_frame: :results } do |f| %>
+      <%= search_form_for @q, url: users_clinic_path, data: { turbo_frame: :results } do |f| %>
         <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
         <div class="relative">
           <%= f.search_field :first_name_or_last_name_or_email_cont,
@@ -22,14 +22,14 @@
           <% if role.name != 'administrator' && !role.users.empty? %>
             <li>
               <span class="flex items-center text-sm font-medium text-gray-900 dark:text-white">
-                <%= link_to role.name.capitalize, clinic_users_path(clinic_id: current_user.clinic.id, role: role.name), class: "block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" %>
+                <%= link_to role.name.capitalize, users_clinic_path(role: role.name), class: "block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" %>
               </span>
             </li>
           <% end %>
         <% end %>
         <li>
           <span class="flex items-center text-sm font-medium text-gray-900 dark:text-white">
-            <%= link_to 'All', clinic_users_path(clinic_id: current_user.clinic.id), class: "block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" %>
+            <%= link_to 'All', users_clinic_path, class: "block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" %>
           </span>
         </li>
       </ul>

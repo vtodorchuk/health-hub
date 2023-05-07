@@ -26,6 +26,9 @@ class User < ApplicationRecord
 
   has_many :services, dependent: :destroy
 
+  has_many :patient_reports, class_name: 'Report', foreign_key: 'patient_id', dependent: :destroy
+  has_many :doctor_reports, class_name: 'Report', foreign_key: 'doctor_id', dependent: :destroy
+
   private
 
   def add_role_to_user
