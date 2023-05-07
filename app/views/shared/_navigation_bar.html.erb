@@ -18,7 +18,7 @@
 
     <% if current_user.present? %>
       <% if current_user.has_role?(:administrator) || current_user.has_role?(:doctor) %>
-        <%= link_to main_app.clinic_users_path(clinic_id: current_user.clinic.id), class: "flex text-gray-600 hover:text-blue-500
+        <%= link_to main_app.users_clinic_path, class: "flex text-gray-600 hover:text-blue-500
                     cursor-pointer transition-colors duration-300" do %>
           Users
         <% end %>

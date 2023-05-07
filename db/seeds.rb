@@ -50,6 +50,6 @@ u = User.create(
 u.remove_role :patient
 u.add_role :administrator
 
-Service.create(name: 'Family Doctor', user_id: u.id)
+Service.create(name: 'Family Doctor', user_id: u.id, clinic_id: c.id)
 
-Contract.create(doctor_id: User.first.id, patient_id: User.second.id)
+Contract.create(doctor_id: User.first.id, patient_id: User.second.id, clinic_id: c.id)

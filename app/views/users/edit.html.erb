@@ -5,7 +5,7 @@
 
 <div class="text-center mt-5">
   <h3>Personal Information</h3>
-  <%= form_for(@user, url: user_path(@user.id), method: :put) do |f| %>
+  <%= form_for(@user, url: clinic_user_path(clinic_id: current_clinic.id, id: @user.id), method: :put) do |f| %>
     <div class="field">
       <%= f.label :first_name %><br />
       <%= f.text_field :first_name, autofocus: true %>

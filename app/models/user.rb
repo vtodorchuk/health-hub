@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   rolify
-  after_create :add_medical_card
+  after_create :add_role_to_user
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
@@ -28,8 +28,7 @@ class User < ApplicationRecord
 
   private
 
-  def add_medical_card
-    MedicalCard.create(user_id: id)
+  def add_role_to_user
     add_role :patient
   end
 end

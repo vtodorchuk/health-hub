@@ -12,7 +12,7 @@
             <li>
                 <% unless booking.status == 'cancelled' %>
                 <%= button_to 'Cancel',
-                              user_booking_cancel_path(user_id: current_user.id, booking_id: booking.id),
+                              clinic_user_booking_cancel_path(user_id: current_user.id, booking_id: booking.id),
                               class: "block px-4 py-2 bg-red-600 dark:hover:bg-red-600 text-white",
                               method: :put
                 %>

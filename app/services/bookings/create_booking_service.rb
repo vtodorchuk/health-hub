@@ -2,7 +2,7 @@
 
 module Bookings
   class CreateBookingService
-    def self.call(current_user, service, params)
+    def self.call(current_user, current_clinic, service, params)
       doctor_accepted = (current_user.has_role? :doctor)
       patient_accepted = (current_user.has_role? :patient)
 
@@ -13,7 +13,8 @@ module Bookings
                   patient_id: params[:booking][:patient],
                   online: params[:booking][:online],
                   doctor_accepted:,
-                  patient_accepted:)
+                  patient_accepted:,
+                  clinic_id: current_clinic.id)
     end
   end
 end

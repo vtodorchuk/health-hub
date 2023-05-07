@@ -4,6 +4,7 @@ class CreateServices < ActiveRecord::Migration[7.0]
       t.references :user, null: false, foreign_key: true
       t.string :name
       t.text :description
+      t.references :clinic, null: false, foreign_key: true
 
       t.timestamps
     end

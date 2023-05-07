@@ -12,4 +12,8 @@ class ApplicationController < ActionController::Base
     session[:previous_request_url] = session[:current_request_url]
     session[:current_request_url] = request.url
   end
+
+  def current_clinic
+    @current_clinic ||= current_user.clinic
+  end
 end

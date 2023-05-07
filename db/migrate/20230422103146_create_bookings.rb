@@ -14,6 +14,7 @@ class CreateBookings < ActiveRecord::Migration[7.0]
 
       t.boolean :doctor_accepted, default: false, null: false
       t.boolean :patient_accepted, default: false, null: false
+      t.references :clinic, null: false, foreign_key: true
 
       t.timestamps
     end

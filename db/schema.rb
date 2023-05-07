@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_22_103146) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_07_112029) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -52,10 +52,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_22_103146) do
     t.decimal "duration", default: "15.0"
     t.bigint "doctor_id"
     t.bigint "patient_id"
-    t.boolean "doctor_accepted", default: false
-    t.boolean "patient_accepted", default: false
+    t.boolean "doctor_accepted", default: false, null: false
+    t.boolean "patient_accepted", default: false, null: false
+    t.bigint "clinic_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["clinic_id"], name: "index_bookings_on_clinic_id"
     t.index ["doctor_id"], name: "index_bookings_on_doctor_id"
     t.index ["patient_id"], name: "index_bookings_on_patient_id"
     t.index ["service_id"], name: "index_bookings_on_service_id"
@@ -64,16 +66,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_22_103146) do
   create_table "chat_users", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "chat_id", null: false
+    t.bigint "clinic_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["chat_id"], name: "index_chat_users_on_chat_id"
+    t.index ["clinic_id"], name: "index_chat_users_on_clinic_id"
     t.index ["user_id"], name: "index_chat_users_on_user_id"
   end
 
   create_table "chats", force: :cascade do |t|
     t.string "name"
+    t.bigint "clinic_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["clinic_id"], name: "index_chats_on_clinic_id"
   end
 
   create_table "clinics", force: :cascade do |t|
@@ -92,6 +98,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_22_103146) do
     t.bigint "patient_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "clinic_id"
     t.index ["doctor_id"], name: "index_contracts_on_doctor_id"
     t.index ["patient_id"], name: "index_contracts_on_patient_id"
   end
@@ -101,6 +108,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_22_103146) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "clinic_id"
     t.index ["user_id"], name: "index_medical_cards_on_user_id"
   end
 
@@ -108,9 +116,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_22_103146) do
     t.text "content"
     t.bigint "chat_id", null: false
     t.bigint "user_id", null: false
+    t.bigint "clinic_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["chat_id"], name: "index_messages_on_chat_id"
+    t.index ["clinic_id"], name: "index_messages_on_clinic_id"
     t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
@@ -131,6 +141,23 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_22_103146) do
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
+  create_table "reports", force: :cascade do |t|
+    t.integer "patient_id"
+    t.integer "doctor_id"
+    t.bigint "booking_id", null: false
+    t.bigint "clinic_id", null: false
+    t.text "illnesses"
+    t.string "status"
+    t.integer "blood_pressure"
+    t.integer "pulse"
+    t.float "temperature"
+    t.boolean "complications", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["booking_id"], name: "index_reports_on_booking_id"
+    t.index ["clinic_id"], name: "index_reports_on_clinic_id"
+  end
+
   create_table "roles", force: :cascade do |t|
     t.string "name"
     t.string "resource_type"
@@ -145,8 +172,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_22_103146) do
     t.bigint "user_id", null: false
     t.string "name"
     t.text "description"
+    t.bigint "clinic_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["clinic_id"], name: "index_services_on_clinic_id"
     t.index ["user_id"], name: "index_services_on_user_id"
   end
 
@@ -181,6 +210,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_22_103146) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "clinic_id"
     t.index ["user_id"], name: "index_visit_users_on_user_id"
     t.index ["visit_id"], name: "index_visit_users_on_visit_id"
   end
@@ -193,24 +223,38 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_22_103146) do
     t.datetime "end_time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "clinic_id"
     t.index ["medical_card_id"], name: "index_visits_on_medical_card_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "bookings", "clinics"
   add_foreign_key "bookings", "services"
   add_foreign_key "bookings", "users", column: "doctor_id"
   add_foreign_key "bookings", "users", column: "patient_id"
   add_foreign_key "chat_users", "chats"
+  add_foreign_key "chat_users", "clinics"
   add_foreign_key "chat_users", "users"
+  add_foreign_key "chats", "clinics"
+  add_foreign_key "contracts", "clinics"
   add_foreign_key "contracts", "users", column: "doctor_id"
   add_foreign_key "contracts", "users", column: "patient_id"
+  add_foreign_key "medical_cards", "clinics"
   add_foreign_key "medical_cards", "users"
   add_foreign_key "messages", "chats"
+  add_foreign_key "messages", "clinics"
   add_foreign_key "messages", "users"
+  add_foreign_key "reports", "bookings"
+  add_foreign_key "reports", "clinics"
+  add_foreign_key "reports", "users", column: "doctor_id"
+  add_foreign_key "reports", "users", column: "patient_id"
+  add_foreign_key "services", "clinics"
   add_foreign_key "services", "users"
   add_foreign_key "users", "clinics"
+  add_foreign_key "visit_users", "clinics"
   add_foreign_key "visit_users", "users"
   add_foreign_key "visit_users", "visits"
+  add_foreign_key "visits", "clinics"
   add_foreign_key "visits", "medical_cards"
 end

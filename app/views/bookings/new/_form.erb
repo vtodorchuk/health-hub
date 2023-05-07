@@ -13,7 +13,7 @@
   </li>
 </ul>
 
-<%= form_for(Booking.new, url: user_bookings_path(user_id: params[:user_id]) , method: :post) do |f| %>
+<%= form_for(Booking.new, url: clinic_user_bookings_path(user_id: params[:user_id]) , method: :post) do |f| %>
   <div class="mt-5 space-y-5">
     <div class="grid gap-6 mb-6">
       <div>

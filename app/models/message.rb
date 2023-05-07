@@ -1,6 +1,7 @@
 class Message < ApplicationRecord
   belongs_to :chat
   belongs_to :user
+  belongs_to :clinic
 
   has_many_attached :files
 

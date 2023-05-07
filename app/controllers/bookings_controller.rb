@@ -33,30 +33,31 @@ class BookingsController < ApplicationController
         end
       else
         format.html do
-          redirect_to user_bookings_path, alert: t('booking.not_found')
+          redirect_to clinic_user_bookings_path, alert: t('booking.not_found')
         end
       end
     end
   end
 
   def create
-    booking = Bookings::CreateBookingService.call(current_user, service, params)
+    booking = Bookings::CreateBookingService.call(current_user, current_clinic, @service, params)
 
     respond_to do |format|
       if booking.save
         CancelBookingJob.set(wait_until: booking.end_time).perform_later(booking)
 
         format.html do
-          redirect_to user_bookings_path(user_id: current_user.id, day: params[:day]), notice: t('booking.created')
+          redirect_to clinic_user_bookings_path(user_id: current_user.id, day: params[:day]), notice: t('booking.created')
         end
       else
         format.html do
-          redirect_to user_bookings_path(user_id: current_user.id, day: params[:day]), alert: booking.errors.full_messages
+          redirect_to clinic_user_bookings_path(user_id: current_user.id, day: params[:day]), alert: booking.errors.full_messages
         end
       end
     end
   end
 
+  # TODO Implement update booking feature
   def update; end
 
   def accept
@@ -65,11 +66,11 @@ class BookingsController < ApplicationController
     respond_to do |format|
       if @booking.nil?
         format.html do
-          redirect_to user_bookings_path(user_id: current_user.id, day: params[:day]), alert: t('booking.not_found')
+          redirect_to clinic_user_bookings_path(user_id: current_user.id, day: params[:day]), alert: t('booking.not_found')
         end
       else
         format.html do
-          redirect_to user_booking_path(user_id: current_user.id, id: @booking.id), notice: t('booking.accepted')
+          redirect_to clinic_user_booking_path(user_id: current_user.id, id: @booking.id), notice: t('booking.accepted')
         end
       end
     end
@@ -81,11 +82,11 @@ class BookingsController < ApplicationController
     respond_to do |format|
       if @booking.nil?
         format.html do
-          redirect_to user_bookings_path(user_id: current_user.id, day: params[:day]), alert: t('booking.not_found')
+          redirect_to clinic_user_bookings_path(user_id: current_user.id, day: params[:day]), alert: t('booking.not_found')
         end
       else
         format.html do
-          redirect_to user_booking_path(user_id: current_user.id, id: @booking.id), notice: t('booking.cancelled')
+          redirect_to clinic_user_booking_path(user_id: current_user.id, id: @booking.id), notice: t('booking.cancelled')
         end
       end
     end
@@ -103,16 +104,16 @@ class BookingsController < ApplicationController
 
     respond_to do |format|
       format.html do
-        redirect_to user_bookings_path(user_id: current_user.id, day: params[:day]), alert: t('booking.validates.collision')
+        redirect_to clinic_user_bookings_path(user_id: current_user.id, day: params[:day]), alert: t('booking.validates.collision')
       end
     end
   end
 
   def service_validation
-    service = ClinicService.call(params[:booking][:service], current_user)
+    @service = ClinicService.call(params[:booking][:service], current_user)
 
-    return unless service.nil?
+    return unless @service.nil?
 
-    redirect_to new_user_booking_path(user_id: current_user.id), alert: t('booking.custom_service.not_found')
+    redirect_to new_clinic_user_booking_path(user_id: current_user.id), alert: t('booking.custom_service.not_found')
   end
 end
