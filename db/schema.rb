@@ -205,28 +205,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_07_112029) do
     t.index ["user_id"], name: "index_users_roles_on_user_id"
   end
 
-  create_table "visit_users", force: :cascade do |t|
-    t.bigint "visit_id", null: false
-    t.bigint "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "clinic_id"
-    t.index ["user_id"], name: "index_visit_users_on_user_id"
-    t.index ["visit_id"], name: "index_visit_users_on_visit_id"
-  end
-
-  create_table "visits", force: :cascade do |t|
-    t.bigint "medical_card_id", null: false
-    t.string "title", null: false
-    t.text "instructions"
-    t.datetime "start_time"
-    t.datetime "end_time"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "clinic_id"
-    t.index ["medical_card_id"], name: "index_visits_on_medical_card_id"
-  end
-
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "bookings", "clinics"
@@ -252,9 +230,4 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_07_112029) do
   add_foreign_key "services", "clinics"
   add_foreign_key "services", "users"
   add_foreign_key "users", "clinics"
-  add_foreign_key "visit_users", "clinics"
-  add_foreign_key "visit_users", "users"
-  add_foreign_key "visit_users", "visits"
-  add_foreign_key "visits", "clinics"
-  add_foreign_key "visits", "medical_cards"
 end
