@@ -6,7 +6,7 @@ class PatientsController < ApplicationController
   def index
     user = User.find_by(id: params[:user_id])
 
-    @patients = user.doctor_contracts
+    @contracts = user.doctor_contracts
 
     respond_to do |format|
       format.html { render :index }
