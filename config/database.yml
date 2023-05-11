@@ -3,8 +3,6 @@ default: &default
   adapter: postgresql
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: vladytodorchuk
-  password: <%= ENV["MS_DATABASE_PASSWORD"] %>
 
 development:
   <<: *default
@@ -15,9 +13,7 @@ test:
   database: ms_test
 
 production:
+  <<: *default
   database: ms_production
-  adapter: postgresql
-  encoding: unicode
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: postgres
-  password: password
+  password:
