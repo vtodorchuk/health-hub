@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_07_112029) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_13_133937) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -40,6 +40,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_07_112029) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "analyzes", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "bookings", force: :cascade do |t|
@@ -103,6 +110,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_07_112029) do
     t.index ["patient_id"], name: "index_contracts_on_patient_id"
   end
 
+  create_table "examinations", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "medical_cards", force: :cascade do |t|
     t.text "body"
     t.bigint "user_id", null: false
@@ -110,6 +124,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_07_112029) do
     t.datetime "updated_at", null: false
     t.integer "clinic_id"
     t.index ["user_id"], name: "index_medical_cards_on_user_id"
+  end
+
+  create_table "medicines", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "messages", force: :cascade do |t|
@@ -141,10 +162,39 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_07_112029) do
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
+  create_table "report_analyzes", force: :cascade do |t|
+    t.bigint "report_id", null: false
+    t.bigint "analyze_id", null: false
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["analyze_id"], name: "index_report_analyzes_on_analyze_id"
+    t.index ["report_id"], name: "index_report_analyzes_on_report_id"
+  end
+
+  create_table "report_examinations", force: :cascade do |t|
+    t.bigint "report_id", null: false
+    t.bigint "examination_id", null: false
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["examination_id"], name: "index_report_examinations_on_examination_id"
+    t.index ["report_id"], name: "index_report_examinations_on_report_id"
+  end
+
+  create_table "report_medicines", force: :cascade do |t|
+    t.bigint "report_id", null: false
+    t.bigint "medicine_id", null: false
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["medicine_id"], name: "index_report_medicines_on_medicine_id"
+    t.index ["report_id"], name: "index_report_medicines_on_report_id"
+  end
+
   create_table "reports", force: :cascade do |t|
     t.integer "patient_id"
     t.integer "doctor_id"
-    t.bigint "booking_id", null: false
     t.bigint "clinic_id", null: false
     t.text "illnesses"
     t.string "status"
@@ -154,7 +204,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_07_112029) do
     t.boolean "complications", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["booking_id"], name: "index_reports_on_booking_id"
     t.index ["clinic_id"], name: "index_reports_on_clinic_id"
   end
 
@@ -223,7 +272,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_07_112029) do
   add_foreign_key "messages", "chats"
   add_foreign_key "messages", "clinics"
   add_foreign_key "messages", "users"
-  add_foreign_key "reports", "bookings"
+  add_foreign_key "report_analyzes", "analyzes"
+  add_foreign_key "report_analyzes", "reports"
+  add_foreign_key "report_examinations", "examinations"
+  add_foreign_key "report_examinations", "reports"
+  add_foreign_key "report_medicines", "medicines"
+  add_foreign_key "report_medicines", "reports"
   add_foreign_key "reports", "clinics"
   add_foreign_key "reports", "users", column: "doctor_id"
   add_foreign_key "reports", "users", column: "patient_id"

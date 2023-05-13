@@ -1,0 +1,95 @@
+<div class="grid grid-cols-2 space-x-5">
+  <div>
+    <h1>
+      <strong>Statistics for</strong> <%= @user.decorate.username %>
+    </h1>
+  </div>
+
+  <div>
+    <%= @start_time %> : <%= @end_time %>
+  </div>
+
+  <div>
+    <%= @time %>
+  </div>
+</div>
+
+<div class="mt-5 space-y-5">
+  <div class="border p-4">
+    <strong><h1> Illnesses </h1></strong>
+    <% @groups.each do |illness, value| %>
+      <span class="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-red-900
+      dark:text-red-300">
+        <%= illness %> <%= value.count %>
+      </span>
+    <% end %>
+  </div>
+
+  <div class="border p-4">
+    <strong><h1> Illness Stats </h1></strong>
+    <% @statistics.each do |illness, value| %>
+      <button
+        data-popover-target="popover-company-profile"
+        type="button"
+        class="m-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300
+        font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700
+        dark:focus:ring-blue-800">
+        <%= illness %>
+      </button>
+      <div data-popover id="popover-company-profile" role="tooltip" class="absolute z-10 invisible inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 w-80 dark:text-gray-400 dark:bg-gray-800 dark:border-gray-600">
+        <div class="p-3">
+          <div class="flex">
+            <% value.each do |key, value| %>
+              <%= "#{key}: #{value}" %> </br>
+            <% end %>
+          </div>
+          <div data-popper-arrow></div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="grid grid-cols-3">
+    <div class="border p-2">
+      <h2>Medicines: <%= @report_medicines.map { |v|  v.count }.sum %></h2>
+
+      <ul>
+        <% @report_medicines.each do |medicine| %>
+          <li>
+            <span class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">
+               <%= medicine.first.name %> <%= medicine.count %>
+             </span>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+
+    <div class="border p-2">
+      <h2>Analyzes: <%= @report_analyzes.map { |v|  v.count }.sum %></h2>
+
+      <ul>
+        <% @report_analyzes.each do |analyze| %>
+          <li>
+            <span class="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">
+               <%= analyze.first.name %> <%= analyze.count %>
+             </span>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+
+    <div class="border p-2">
+      <h2>Examinations: <%= @report_examinations.map { |v|  v.count }.sum %></h2>
+
+      <ul>
+        <% @report_examinations.each do |examination| %>
+          <li>
+            <span class="bg-indigo-100 text-indigo-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">
+             <%= examination.first.name %> <%= examination.count %>
+           </span>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>

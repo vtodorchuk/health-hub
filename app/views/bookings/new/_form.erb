@@ -13,14 +13,14 @@
   </li>
 </ul>
 
-<%= form_for(Booking.new, url: clinic_user_bookings_path(user_id: params[:user_id]) , method: :post) do |f| %>
+<%= form_for(Booking.new, url: clinic_user_bookings_path(user_id: params[:user_id]), method: :post) do |f| %>
   <div class="mt-5 space-y-5">
     <div class="grid gap-6 mb-6">
       <div>
         <%= f.label :start_time, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
         <%= f.datetime_field :start_time,
                              value: DateTime.now,
-                             class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"%>
+                             class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
       </div>
       <% if current_user.has_role? :doctor %>
         <div>
@@ -44,12 +44,12 @@
             <%= f.label :patient, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
 
             <select id="booking_patient" name="booking[patient]" class="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-              <% Role.find_by(name: 'patient').users.each do |user| %>
+              <% Role.find_by(name: 'patient')&.users&.each do |user| %>
                 <% unless user.id == current_user.id %>
                   <option value='<%= user.id %>'><%= user.decorate.username %></option>
                 <% end %>
               <% end %>
-            </select>          </div>
+            </select></div>
         </div>
       <% else %>
         <div>
@@ -95,7 +95,7 @@
     </div>
 
     <div>
-      <%= f.submit 'Create' , class: "text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium
+      <%= f.submit 'Create', class: "text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium
     rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" %>
     </div>
   </div>

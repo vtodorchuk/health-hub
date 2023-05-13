@@ -1,3 +1,5 @@
 
 en:
   unauthorized: 'Page not Found'
+  server:
+    error: 'Service error!'

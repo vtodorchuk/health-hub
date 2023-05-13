@@ -1,8 +1,0 @@
-<h2 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">Patients</h2>
-<ul class="max-w-md space-y-1 text-gray-500 list-inside dark:text-gray-400">
-  <% contracts.each do |contract| %>
-    <li class="flex items-center">
-      <%= link_to contract.patient.decorate.username, clinic_user_path(id: contract.patient.id) %>
-    </li>
-  <% end %>
-</ul>

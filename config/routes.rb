@@ -19,7 +19,13 @@ Rails.application.routes.draw do
       end
       resources :services
       resources :patients
-      resources :reports
+      resources :reports do
+        resources :medicines, only: %i[index new create]
+        resources :analyzes, only: %i[index new create]
+        resources :examinations, only: %i[index new create]
+      end
+
+      get '/statistic', to: 'reports#statistic'
     end
 
     resources :medical_cards

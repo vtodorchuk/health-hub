@@ -12,6 +12,6 @@
     <%= report.created_at %>
   </td>
   <td class="px-6 py-4 text-right">
-    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+    <%= link_to 'Show', clinic_user_report_path(user_id: user.id, id: report.id), class: "font-medium text-blue-600 dark:text-blue-500 hover:underline" %>
   </td>
 </tr>

@@ -1,0 +1,21 @@
+<strong><h1>Analyze</h1></strong>
+
+<%= form_for(ReportAnalyze.new, url: clinic_user_report_analyzes_path(user_id: @user.id, report_id: @report.id), method: :post)  do |f| %>
+  <div class="space-y-5 space-x-5">
+    <h1>Details</h1>
+
+    <%= f.hidden_field :report_id, value: @report.id %>
+
+    <div>
+      <%= f.label :analyze %>
+      <%= f.collection_select :analyze_id, Analyze.all, :id, :name, {prompt: "Analyze"}, autofocus: true, id: 'analyze' %>
+    </div>
+
+    <div>
+      <%= f.label :description %>
+      <%= f.text_field :description %>
+    </div>
+
+    <%= f.submit 'Create', class: "text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" %>
+  </div>
+<% end %>

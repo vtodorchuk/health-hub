@@ -1,18 +1,23 @@
 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+
   <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
     <%= patient.id %>
   </th>
+
   <td class="px-6 py-4">
     <%= patient.username %>
   </td>
+
   <td class="px-6 py-4">
     <%= patient.clinic.tooltip %>
   </td>
+
   <td class="px-6 py-4">
     <div class="inline-flex rounded-md shadow-sm" role="group">
       <%= link_to 'Show', clinic_user_path(id: patient.id), class: "px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-l-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white" %>
-      <%= link_to 'Bookings', clinic_user_path(id: patient.id), class: "px-4 py-2 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white" %>
+      <%= link_to 'Bookings', clinic_user_bookings_path(user_id: patient.id), class: "px-4 py-2 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white" %>
       <%= link_to 'Reports', clinic_user_reports_path(user_id: patient.id), class: "px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-r-md hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white" %>
     </div>
   </td>
+
 </tr>
