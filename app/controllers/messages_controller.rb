@@ -6,12 +6,13 @@ class MessagesController < ApplicationController
   def create
     @message = current_user.messages.build(messages_params)
     @message.chat_id = params[:chat_id]
+    @message.clinic_id = current_clinic.id
     @message.save
   end
 
   private
 
   def messages_params
-    params.require(:message).permit(:content, :files)
+    params.require(:message).permit(:content, :files, :clinic_id)
   end
 end

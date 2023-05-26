@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
   default_url_options host: 'localhost:3000' if Rails.env.development?
 
   mount Notifications::Engine => '/notifications'

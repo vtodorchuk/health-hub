@@ -9,9 +9,6 @@ class User < ApplicationRecord
   has_one :medical_card, dependent: :destroy
   belongs_to :clinic
 
-  has_many :visit_user, dependent: :destroy
-  has_many :visits, through: :visit_user
-
   has_many :doctor_contracts, class_name: 'Contract', foreign_key: 'doctor_id', dependent: :destroy
   has_many :patient_contracts, class_name: 'Contract', foreign_key: 'patient_id', dependent: :destroy
 

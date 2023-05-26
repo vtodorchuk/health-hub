@@ -12,4 +12,7 @@ class Report < ApplicationRecord
 
   has_many :report_examinations, dependent: :destroy
   has_many :examinations, through: :report_examinations
+
+  has_many :report_fields, dependent: :destroy
+  has_many :fields, through: :report_fields
 end

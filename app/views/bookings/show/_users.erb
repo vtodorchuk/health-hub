@@ -6,21 +6,9 @@
     <div class="flow-root">
       <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
         <li class="py-3 sm:py-4 flex flex-col-2 space-x-5">
-          <% if booking.doctor.avatar.attached? %>
-            <%= image_tag(booking.doctor.avatar, class: "w-8 h-8 rounded-full") %>
-          <% else %>
-            <%= image_tag('image-2@2x.jpg', class: "w-8 h-8 rounded-full") %>
-          <% end %>
-
           <%= booking.doctor.decorate.username %>
         </li>
         <li class="py-3 sm:py-4 flex flex-col-2 space-x-5">
-          <% if booking.patient.avatar.attached? %>
-            <%= image_tag(booking.patient.avatar, class: "w-8 h-8 rounded-full") %>
-          <% else %>
-            <%= image_tag('image-2@2x.jpg', class: "w-8 h-8 rounded-full") %>
-          <% end %>
-
           <%= booking.patient.decorate.username %>
         </li>
       </ul>

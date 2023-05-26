@@ -15,9 +15,9 @@ Clinic.create(label: 'Ambulatoriya Simeynoyi Medytsyny',
               city: 'Kyiv',
               latitude: 50.4638399,
               longitude: 30.4861128)
-Clinic.create(label: 'Yuliya, Ambulatoriya Simeynoyi Medytsyny',
-              tooltip: 'Osinnya St, 33',
-              city: 'Kyiv',
+Clinic.create(label: 'Family Medicine Clinic',
+              tooltip: 'Kniahyni Olhy St, 16',
+              city: 'Dnipro',
               latitude: 50.3409945,
               longitude: 30.9694451)
 
@@ -53,3 +53,4 @@ u.add_role :administrator
 Service.create(name: 'Family Doctor', user_id: u.id, clinic_id: c.id)
 
 Contract.create(doctor_id: User.first.id, patient_id: User.second.id, clinic_id: c.id)
+AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?

@@ -10,9 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_13_133937) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_26_184811) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "active_admin_comments", force: :cascade do |t|
+    t.string "namespace"
+    t.text "body"
+    t.string "resource_type"
+    t.bigint "resource_id"
+    t.string "author_type"
+    t.bigint "author_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author"
+    t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
+    t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource"
+  end
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -40,6 +54,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_13_133937) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "admin_users", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_admin_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
   create_table "analyzes", force: :cascade do |t|
@@ -117,6 +143,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_13_133937) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "fields", force: :cascade do |t|
+    t.string "name"
+    t.string "value"
+    t.string "max_value"
+    t.string "min_value"
+    t.string "illness"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "medical_cards", force: :cascade do |t|
     t.text "body"
     t.bigint "user_id", null: false
@@ -180,6 +216,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_13_133937) do
     t.datetime "updated_at", null: false
     t.index ["examination_id"], name: "index_report_examinations_on_examination_id"
     t.index ["report_id"], name: "index_report_examinations_on_report_id"
+  end
+
+  create_table "report_fields", force: :cascade do |t|
+    t.bigint "report_id", null: false
+    t.bigint "field_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["field_id"], name: "index_report_fields_on_field_id"
+    t.index ["report_id"], name: "index_report_fields_on_report_id"
   end
 
   create_table "report_medicines", force: :cascade do |t|
@@ -276,6 +321,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_13_133937) do
   add_foreign_key "report_analyzes", "reports"
   add_foreign_key "report_examinations", "examinations"
   add_foreign_key "report_examinations", "reports"
+  add_foreign_key "report_fields", "fields"
+  add_foreign_key "report_fields", "reports"
   add_foreign_key "report_medicines", "medicines"
   add_foreign_key "report_medicines", "reports"
   add_foreign_key "reports", "clinics"
