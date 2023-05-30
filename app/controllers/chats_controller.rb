@@ -15,19 +15,19 @@ class ChatsController < ApplicationController
     @messages = @chat.messages
   end
 
-  def new
-  end
+  def new; end
 
   def create
-    chat = Chat.new(name: "user#{current_user.id}_user#{params[:user_id]}")
+    clinic = current_user.clinic
+    chat = Chat.new(name: "user#{current_user.id}_user#{params[:user_id]}", clinic_id: clinic.id)
 
     if chat.save
-      ChatUser.create(user_id: current_user.id, chat_id: chat.id)
-      ChatUser.create(user_id: params[:user_id], chat_id: chat.id)
+      ChatUser.create(user_id: current_user.id, chat_id: chat.id, clinic_id: clinic.id)
+      ChatUser.create(user_id: params[:user_id], chat_id: chat.id, clinic_id: clinic.id)
 
-      redirect_to chat_path(chat)
+      redirect_to clinic_chat_path(id: chat)
     else
-      redirect_to chats_path, alert: chat.errors.full_messages.join(', ')
+      redirect_to clinic_chats_path, alert: chat.errors.full_messages.join(', ')
     end
   end
 end

@@ -1,0 +1,102 @@
+<h2 class="mb-2 font-semibold text-gray-900 dark:text-white">New Booking:</h2>
+
+<h3 class="mb-3 text-sm">To avoid collision or errors, follow this</h3>
+<ul class="text-sm max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
+  <li>
+    15 minutes before buffer
+  </li>
+  <li>
+    15 minutes after buffer
+  </li>
+  <li>
+    You can not create booking in the past
+  </li>
+</ul>
+
+<%= form_for(Booking.new, url: clinic_user_bookings_path(user_id: params[:user_id]), method: :post) do |f| %>
+  <div class="mt-5 space-y-5">
+    <div class="grid gap-6 mb-6">
+      <div>
+        <%= f.label :start_time, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+        <%= f.datetime_field :start_time,
+                             value: DateTime.now,
+                             class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+      </div>
+      <% if current_user.has_role? :doctor %>
+        <div>
+          <div>
+            <%= f.label :doctor, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+
+            <select id="booking_doctor" name="booking[doctor]" class="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              <option value='<%= current_user.id %>'><%= current_user.decorate.username %></option>
+            </select>
+          </div>
+          <div>
+            <%= f.label :service, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+
+            <select id="booking_service" name="booking[service]" class="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              <% Service.all.each do |service| %>
+                <option selected value='<%= service.name %>'><%= service.name %></option>
+              <% end %>
+            </select>
+          </div>
+          <div>
+            <%= f.label :patient, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+
+            <select id="booking_patient" name="booking[patient]" class="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              <% Role.find_by(name: 'patient')&.users&.each do |user| %>
+                <% unless user.id == current_user.id %>
+                  <option value='<%= user.id %>'><%= user.decorate.username %></option>
+                <% end %>
+              <% end %>
+            </select></div>
+        </div>
+      <% else %>
+        <div>
+          <%= f.label :patient, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+
+          <select id="booking_patient" name="booking[patient]" class="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option value='<%= current_user.id %>'><%= current_user.decorate.username %></option>
+          </select>
+        </div>
+        <div>
+          <%= f.label :service, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+
+          <select id="booking_service" name="booking[service]" class="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <% Service.all.each do |service| %>
+              <option value='<%= service.name %>'><%= service.name %></option>
+            <% end %>
+          </select>
+        </div>
+        <div>
+          <%= f.label :doctor, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+
+          <select id="booking_doctor" name="booking[doctor]" class="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <% Role.find_by(name: 'doctor').users.each do |user| %>
+              <% unless user.id == current_user.id %>
+                <option value='<%= user.id %>'><%= user.decorate.username %></option>
+              <% end %>
+            <% end %>
+          </select>
+        </div>
+      <% end %>
+      <div>
+        <%= f.label :duration, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+        <select id="booking_duration" name="booking[duration]" class="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+          <option value='15'>15</option>
+          <option selected value='30'>30</option>
+          <option value='45'>45</option>
+        </select>
+      </div>
+      <div>
+        <%= f.label :online, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+        <%= f.check_box :online, class: "ml-2 text-sm font-medium text-gray-900 dark:text-gray-300" %>
+      </div>
+    </div>
+
+    <div>
+      <%= f.submit 'Create', class: "text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium
+    rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" %>
+    </div>
+  </div>
+<% end %>

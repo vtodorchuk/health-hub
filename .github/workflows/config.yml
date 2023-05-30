@@ -11,7 +11,7 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
-  test:
+  workflow:
     runs-on: ubuntu-latest
     needs: install-cache
     timeout-minutes: 10
@@ -43,15 +43,5 @@ jobs:
           sudo apt-get -y update
       - name: Linters
         run: |
-          bin/fasterer
-          bin/rubocop
-      - name: Run tests
-        env:
-          RAILS_ENV: test
-          DATABASE_URL: postgres://postgres:password@localhost:5432/ms_test
-          # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
-        run: |
-          bin/rails tailwindcss:build
-          bin/rails db:create
-          bin/rails db:schema:load
-          bin/rspec
+          bundle exec fasterer
+          bundle exec rubocop

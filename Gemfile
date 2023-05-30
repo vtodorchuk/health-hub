@@ -1,43 +1,58 @@
-source "https://rubygems.org"
+source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.1.2"
+ruby '3.1.2'
 
-gem "rails", "~> 7.0.4", ">= 7.0.4.3"
-gem "sprockets-rails"
-gem "pg", "~> 1.1"
-gem "puma", "~> 5.0"
-gem "jsbundling-rails"
-gem "turbo-rails"
-gem "stimulus-rails"
-gem "cssbundling-rails"
-gem "jbuilder"
-gem "kredis"
-gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
-gem "bootsnap", require: false
-gem "sassc-rails"
+gem 'bootsnap', require: false
+gem 'cssbundling-rails'
+gem 'jbuilder'
+gem 'jsbundling-rails'
+gem 'kredis'
+gem 'overcommit', '~> 0.59.1'
+gem 'puma', '~> 5.0'
+gem 'rails', '~> 7.0.4', '>= 7.0.4.3'
+gem 'sassc-rails'
+gem 'sprockets-rails'
+gem 'sqlite3', '~> 1.4'
+gem 'stimulus-rails'
+gem 'turbo-rails'
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 group :development, :test do
-  gem "debug", platforms: %i[ mri mingw x64_mingw ]
-  gem 'ffaker', '~> 2.21'
+  gem 'debug', platforms: %i[mri mingw x64_mingw]
+  gem 'pry'
 end
 
 group :development do
-  gem "web-console"
+  gem 'web-console'
 end
 
-gem "image_processing"
-gem "tailwindcss-rails"
+group :test do
+  gem 'rubocop', '~> 1.50', '>= 1.50.2'
+  gem 'rubocop-performance', '~> 1.17', '>= 1.17.1'
+  gem 'rubocop-rails', '~> 2.19', '>= 2.19.1'
+  gem 'rubocop-rspec', '~> 2.20'
+
+  gem 'fasterer'
+
+  gem 'rspec-rails', '~> 6.0', '>= 6.0.1'
+end
+
 gem 'devise'
-gem 'rolify'
 gem 'draper'
-gem 'ransack'
+gem 'image_processing'
 gem 'kaminari'
 gem 'mapkick-rb'
+gem 'ransack'
+gem 'rolify'
+gem 'tailwindcss-rails'
 
 gem 'omniauth-google-oauth2', '~> 1.1', '>= 1.1.1'
 gem 'omniauth-rails_csrf_protection', '~> 1.0', '>= 1.0.1'
 
-gem "simple_form"
+gem 'action_policy'
+gem 'activeadmin'
 gem 'notifications'
-gem "action_policy"
+gem 'simple_form'
+
+gem 'ffaker', '~> 2.21'

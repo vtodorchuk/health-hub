@@ -1,20 +1,16 @@
 class User < ApplicationRecord
   rolify
-  after_create :add_medical_card
+  after_create :add_role_to_user
 
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable,
-         :omniauthable, omniauth_providers: [:google_oauth2]
+         :recoverable, :rememberable, :validatable
 
   has_one_attached :avatar
   has_one :medical_card, dependent: :destroy
   belongs_to :clinic
 
-  has_many :visit_user, dependent: :destroy
-  has_many :visits, through: :visit_user
-
-  has_many :contract_users, dependent: :destroy
-  has_many :contracts, through: :contract_users
+  has_many :doctor_contracts, class_name: 'Contract', foreign_key: 'doctor_id', dependent: :destroy
+  has_many :patient_contracts, class_name: 'Contract', foreign_key: 'patient_id', dependent: :destroy
 
   has_many :chat_users, dependent: :destroy
   has_many :chats, through: :chat_users
@@ -22,26 +18,17 @@ class User < ApplicationRecord
   has_many :messages, dependent: :destroy
   has_many :notifications, dependent: :destroy, as: :recipient
 
+  has_many :doctor_bookings, class_name: 'Booking', foreign_key: 'doctor_id', dependent: :destroy
+  has_many :patient_bookings, class_name: 'Booking', foreign_key: 'patient_id', dependent: :destroy
+
+  has_many :services, dependent: :destroy
+
+  has_many :patient_reports, class_name: 'Report', foreign_key: 'patient_id', dependent: :destroy
+  has_many :doctor_reports, class_name: 'Report', foreign_key: 'doctor_id', dependent: :destroy
+
   private
-  def add_medical_card
-    MedicalCard.create(user_id: id)
+
+  def add_role_to_user
     add_role :patient
-  end
-
-  def self.from_omniauth(access_token)
-    data = access_token.info
-    user = User.where(email: data['email']).first
-
-    unless user
-        user = User.create(
-           email: data['email'],
-           password: Devise.friendly_token[0,20]
-        )
-    end
-    user.first_name = access_token.info.first_name
-    user.first_name = access_token.info.last_name
-    user.avatar = access_token.info.image
-    user.uid = access_token.uid
-    user.provider = access_token.provider
   end
 end

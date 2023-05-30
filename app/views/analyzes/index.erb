@@ -1,0 +1,56 @@
+<%= render 'shared/breadcrumbs/report', user: @user, report: @report %>
+
+<div class="flex flex-col">
+  <div class="flex justify-end">
+    <%= link_to 'New Analyze',
+                new_clinic_user_report_analyze_path(user_id: params[:user_id], report_id: params[:report_id]),
+                class: "text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" %>
+  </div>
+
+  <div>
+    <h1> Analyzes </h1>
+    <% unless @analyzes.empty? %>
+      <div class="mt-5 relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+          <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <tr>
+            <th scope="col" class="px-6 py-3">
+              Analyze Name
+            </th>
+            <th scope="col" class="px-6 py-3">
+              Added At
+            </th>
+            <th scope="col" class="px-6 py-3">
+              Actions
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @analyzes.each do |analyze| %>
+            <%= render 'medicines/index/row', medicine: analyze %>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="mt-5 space-x-5">
+  <%= link_to clinic_user_report_medicines_path(user_id: @user.id, report_id: @report.id) do %>
+    <kbd class="inline-flex items-center px-2 py-1.5 text-blue-800 bg-blue-100 border border-blue-200 rounded-lg dark:bg-blue-600 dark:text-blue-100 dark:border-blue-500">
+      <svg class="w-4 h-4" aria-hidden="true" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path d="M137.4 406.6l-128-127.1C3.125 272.4 0 264.2 0 255.1s3.125-16.38 9.375-22.63l128-127.1c9.156-9.156 22.91-11.9 34.88-6.943S192 115.1 192 128v255.1c0 12.94-7.781 24.62-19.75 29.58S146.5 415.8 137.4 406.6z"/></svg>
+      <span class="sr-only">Arrow key left</span>
+      Prev
+    </kbd>
+  <% end %>
+
+  <%= link_to clinic_user_report_examinations_path(user_id: @user.id, report_id: @report.id) do %>
+    <kbd class="inline-flex items-center px-2 py-1.5 text-blue-800 bg-blue-100 border border-blue-200 rounded-lg dark:bg-blue-600 dark:text-blue-100 dark:border-blue-500">
+      <svg class="w-4 h-4" aria-hidden="true" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path d="M118.6 105.4l128 127.1C252.9 239.6 256 247.8 256 255.1s-3.125 16.38-9.375 22.63l-128 127.1c-9.156 9.156-22.91 11.9-34.88 6.943S64 396.9 64 383.1V128c0-12.94 7.781-24.62 19.75-29.58S109.5 96.23 118.6 105.4z"/></svg>
+      <span class="sr-only">Arrow key right</span>
+      Next
+    </kbd>
+  <% end %>
+  <%= render 'shared/buttons/save_report', user: @user, report: @report %>
+</div>

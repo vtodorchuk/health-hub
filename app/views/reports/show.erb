@@ -1,0 +1,75 @@
+<strong>
+  <h1>Report for <%= @report.patient.decorate.username %></h1>
+  <h2> Doctor <%= @report.doctor.decorate.username %></h2>
+</strong>
+
+<div>
+  <% @report.attributes.each do |key ,value| %>
+      <%= "#{key}: #{value}" %> <br>
+  <% end %>
+</div>
+
+<div class="grid grid-cols-2 mt-5 space-x-5">
+  <div>
+    <h3>Medicine</h3>
+
+    <ul class="w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+      <% @medicines.each_with_index do |medicine, index| %>
+        <li data-popover-target="popover-analyze-<%= index %>" class="w-full px-4 py-2 border-b border-gray-200 dark:border-gray-600">
+          <%= medicine.name %>
+        </li>
+
+        <div data-popover id="popover-analyze-<%= index %>" role="tooltip" class="absolute z-10 invisible inline-block w-64 text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800">
+          <div class="px-3 py-2 bg-gray-100 border-b border-gray-200 rounded-t-lg dark:border-gray-600 dark:bg-gray-700">
+            <h3 class="font-semibold text-gray-900 dark:text-white">Description</h3>
+          </div>
+          <div class="px-3 py-2">
+            <p><%= medicine.description %></p>
+          </div>
+        </div>
+      <% end %>
+    </ul>
+  </div>
+
+  <div>
+    <h3>Analyzes</h3>
+
+    <ul class="w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+      <% @analyzes.each_with_index do |analyze, index| %>
+        <li  data-popover-target="popover-analyze-<%= index %>" class="w-full px-4 py-2 border-b border-gray-200 dark:border-gray-600">
+          <%= analyze.name %>
+        </li>
+
+        <div data-popover id="popover-analyze-<%= index %>" role="tooltip" class="absolute z-10 invisible inline-block w-64 text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800">
+          <div class="px-3 py-2 bg-gray-100 border-b border-gray-200 rounded-t-lg dark:border-gray-600 dark:bg-gray-700">
+            <h3 class="font-semibold text-gray-900 dark:text-white">Description</h3>
+          </div>
+          <div class="px-3 py-2">
+            <p><%= analyze.description %></p>
+          </div>
+        </div>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+<div class="mt-5">
+  <h3>Examinations</h3>
+
+  <ul class="w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+    <% @examinations.each_with_index do |examination, index| %>
+      <li data-popover-target="popover-examination-<%= index %>" class="w-full px-4 py-2 border-b border-gray-200 dark:border-gray-600">
+        <%= examination.name %>
+      </li>
+
+      <div data-popover id="popover-examination-<%= index %>" role="tooltip" class="absolute z-10 invisible inline-block w-64 text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800">
+        <div class="px-3 py-2 bg-gray-100 border-b border-gray-200 rounded-t-lg dark:border-gray-600 dark:bg-gray-700">
+          <h3 class="font-semibold text-gray-900 dark:text-white">Description</h3>
+        </div>
+        <div class="px-3 py-2">
+          <p><%= examination.description %></p>
+        </div>
+      </div>
+    <% end %>
+  </ul>
+</div>

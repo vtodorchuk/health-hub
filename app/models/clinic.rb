@@ -1,3 +1,3 @@
 class Clinic < ApplicationRecord
-  has_many :users
+  has_many :users, dependent: :nullify
 end

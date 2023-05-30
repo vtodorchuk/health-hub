@@ -1,0 +1,4 @@
+en:
+  users:
+    not_found: 'No such user found!'
+    success: 'Success!'

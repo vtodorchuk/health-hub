@@ -1,7 +1,5 @@
 <h2>Log in</h2>
 
-<%= link_to "Sign in with Google", omniauth_user_session_path, method: :post %>
-
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
   <div class="field">
     <%= f.email_field :email, autofocus: true, autocomplete: "email",

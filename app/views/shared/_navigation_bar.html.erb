@@ -4,8 +4,8 @@
 
   <div class="flex items-center">
     <a class="cursor-pointer">
-      <h3 class="text-2xl font-medium text-red-500 hover:text-red-800">
-        Health <strong class="text-blue-600 hover:text-blue-800">Eternal</strong>
+      <h3 class="text-2xl font-medium">
+        health-hub
       </h3>
     </a>
   </div>
@@ -16,71 +16,18 @@
       Home
     <% end %>
 
-    <%= link_to main_app.clinics_path, class: "flex text-gray-600 hover:text-blue-500
-                    cursor-pointer transition-colors duration-300" do %>
-      Clinics
-    <% end %>
-
     <% if current_user.present? %>
-      <%= link_to main_app.profile_dashboard_path, class: "flex text-gray-600 hover:text-blue-500
+      <% if current_user.has_role?(:administrator) || current_user.has_role?(:doctor) %>
+        <%= link_to main_app.users_clinic_path, class: "flex text-gray-600 hover:text-blue-500
                     cursor-pointer transition-colors duration-300" do %>
-        Dashboard
-      <% end %>
-
-      <%= link_to main_app.profile_path, class: "flex text-gray-600 hover:text-blue-500
-                    cursor-pointer transition-colors duration-300" do %>
-        Profile
-      <% end %>
-
-      <% if current_user.roles.first.name == :doctor %>
-        <a class="flex text-gray-600 hover:text-blue-500
-                    cursor-pointer transition-colors duration-300">
-          Patients
-        </a>
-      <% else %>
-        <%= link_to main_app.profile_medical_card_path, class: "flex text-gray-600 hover:text-blue-500
-                    cursor-pointer transition-colors duration-300" do %>
-          Medical Card
+          Users
         <% end %>
-      <% end %>
-      <a class="flex text-gray-600 hover:text-blue-500
-                    cursor-pointer transition-colors duration-300">
-        Calendar
-      </a>
-
-      <%= link_to main_app.chats_path, class: "flex text-gray-600 hover:text-blue-500
-                    cursor-pointer transition-colors duration-300" do %>
-        Messages
-      <% end %>
-
-      <%= link_to main_app.notifications_path, class: "flex text-gray-600 hover:text-blue-500
-                    cursor-pointer transition-colors duration-300" do %>
-        <%= render 'shared/bell' %>
-      <% end %>
-
-      <%= link_to main_app.users_path, class: "flex text-gray-600 hover:text-blue-500
-                    cursor-pointer transition-colors duration-300" do %>
-        Users
       <% end %>
     <% end %>
   </div>
 
   <div class="flex items-center space-x-5">
-    <% if current_user.present? %>
-      <%= button_to main_app.destroy_user_session_path, class: "flex text-red-600
-                    cursor-pointer transition-colors duration-300
-                    font-semibold text-red-600", method: :delete do %>
-
-        <svg class="fill-current h-5 w-5 mr-2 mt-0.5" xmlns="http://www.w3.org/2000/svg"
-             xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="24" height="24"
-             viewBox="0 0 24 24">
-          <path
-            d="M10,17V14H3V10H10V7L15,12L10,17M10,2H19A2,2 0 0,1 21,4V20A2,2 0 0,1 19,22H10A2,2 0 0,1 8,20V18H10V20H19V4H10V6H8V4A2,2 0 0,1 10,2Z" />
-        </svg>
-
-        Log Out
-      <% end %>
-    <% else %>
+    <% unless current_user.present? %>
       <%= link_to main_app.new_user_registration_path, class: "flex text-gray-600 hover:text-blue-500
                     cursor-pointer transition-colors duration-300" do %>
 
