@@ -11,16 +11,13 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2023_05_26_184811) do
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
     t.string "resource_type"
-    t.bigint "resource_id"
+    t.integer "resource_id"
     t.string "author_type"
-    t.bigint "author_id"
+    t.integer "author_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author"
@@ -78,16 +75,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_26_184811) do
   create_table "bookings", force: :cascade do |t|
     t.datetime "start_time"
     t.datetime "end_time"
-    t.bigint "service_id", null: false
+    t.integer "service_id", null: false
     t.boolean "intake_forms", default: false, null: false
     t.boolean "online", default: false, null: false
     t.string "status", default: "pending"
     t.decimal "duration", default: "15.0"
-    t.bigint "doctor_id"
-    t.bigint "patient_id"
+    t.integer "doctor_id"
+    t.integer "patient_id"
     t.boolean "doctor_accepted", default: false, null: false
     t.boolean "patient_accepted", default: false, null: false
-    t.bigint "clinic_id", null: false
+    t.integer "clinic_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["clinic_id"], name: "index_bookings_on_clinic_id"
@@ -97,9 +94,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_26_184811) do
   end
 
   create_table "chat_users", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "chat_id", null: false
-    t.bigint "clinic_id", null: false
+    t.integer "user_id", null: false
+    t.integer "chat_id", null: false
+    t.integer "clinic_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["chat_id"], name: "index_chat_users_on_chat_id"
@@ -109,7 +106,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_26_184811) do
 
   create_table "chats", force: :cascade do |t|
     t.string "name"
-    t.bigint "clinic_id", null: false
+    t.integer "clinic_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["clinic_id"], name: "index_chats_on_clinic_id"
@@ -127,8 +124,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_26_184811) do
 
   create_table "contracts", force: :cascade do |t|
     t.text "body"
-    t.bigint "doctor_id"
-    t.bigint "patient_id"
+    t.integer "doctor_id"
+    t.integer "patient_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "clinic_id"
@@ -155,7 +152,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_26_184811) do
 
   create_table "medical_cards", force: :cascade do |t|
     t.text "body"
-    t.bigint "user_id", null: false
+    t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "clinic_id"
@@ -171,9 +168,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_26_184811) do
 
   create_table "messages", force: :cascade do |t|
     t.text "content"
-    t.bigint "chat_id", null: false
-    t.bigint "user_id", null: false
-    t.bigint "clinic_id", null: false
+    t.integer "chat_id", null: false
+    t.integer "user_id", null: false
+    t.integer "clinic_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["chat_id"], name: "index_messages_on_chat_id"
@@ -199,8 +196,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_26_184811) do
   end
 
   create_table "report_analyzes", force: :cascade do |t|
-    t.bigint "report_id", null: false
-    t.bigint "analyze_id", null: false
+    t.integer "report_id", null: false
+    t.integer "analyze_id", null: false
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -209,8 +206,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_26_184811) do
   end
 
   create_table "report_examinations", force: :cascade do |t|
-    t.bigint "report_id", null: false
-    t.bigint "examination_id", null: false
+    t.integer "report_id", null: false
+    t.integer "examination_id", null: false
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -219,8 +216,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_26_184811) do
   end
 
   create_table "report_fields", force: :cascade do |t|
-    t.bigint "report_id", null: false
-    t.bigint "field_id", null: false
+    t.integer "report_id", null: false
+    t.integer "field_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["field_id"], name: "index_report_fields_on_field_id"
@@ -228,8 +225,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_26_184811) do
   end
 
   create_table "report_medicines", force: :cascade do |t|
-    t.bigint "report_id", null: false
-    t.bigint "medicine_id", null: false
+    t.integer "report_id", null: false
+    t.integer "medicine_id", null: false
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -240,7 +237,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_26_184811) do
   create_table "reports", force: :cascade do |t|
     t.integer "patient_id"
     t.integer "doctor_id"
-    t.bigint "clinic_id", null: false
+    t.integer "clinic_id", null: false
     t.text "illnesses"
     t.string "status"
     t.integer "blood_pressure"
@@ -255,7 +252,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_26_184811) do
   create_table "roles", force: :cascade do |t|
     t.string "name"
     t.string "resource_type"
-    t.bigint "resource_id"
+    t.integer "resource_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
@@ -263,10 +260,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_26_184811) do
   end
 
   create_table "services", force: :cascade do |t|
-    t.bigint "user_id", null: false
+    t.integer "user_id", null: false
     t.string "name"
     t.text "description"
-    t.bigint "clinic_id", null: false
+    t.integer "clinic_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["clinic_id"], name: "index_services_on_clinic_id"
@@ -285,15 +282,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_26_184811) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "clinic_id"
+    t.integer "clinic_id"
     t.index ["clinic_id"], name: "index_users_on_clinic_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   create_table "users_roles", id: false, force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "role_id"
+    t.integer "user_id"
+    t.integer "role_id"
     t.index ["role_id"], name: "index_users_roles_on_role_id"
     t.index ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id"
     t.index ["user_id"], name: "index_users_roles_on_user_id"
